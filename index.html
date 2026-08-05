@@ -332,6 +332,7 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:12px;color
   <button data-s="now" class="on">Now</button>
   <button data-s="lessons">Lessons</button>
   <button data-s="learn">Learn</button>
+  <button data-s="glossary">Glossary</button>
   <button data-s="notebook">Notebook</button>
   <button data-s="practice">Practice</button>
   <button data-s="explore">Explore</button>
@@ -342,6 +343,7 @@ footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:12px;color
  <section id="now" class="on"></section>
  <section id="lessons"></section>
  <section id="learn"></section>
+ <section id="glossary"></section>
  <section id="notebook"></section>
  <section id="practice"></section>
  <section id="explore"></section>
@@ -595,9 +597,15 @@ function renderLearn(){
     b.onclick=()=>openReading(r.n);g.appendChild(b);});
   s.appendChild(g);
  });
+}
+/* Glossary is its own tab. The terms live in site_practice.js because the same
+   array is the Practice flashcard deck — one source, two presentations. */
+function renderGlossary(){
+ const s=$('#glossary');
+ s.textContent='';
+ s.appendChild(el('h2',null,'Glossary'));
+ s.appendChild(el('p','lede','Terms the course actually uses, drawn from the readings. The same terms are the flashcard deck in Practice, if you would rather be asked than told.'));
  const gl=el('div','card');
- gl.appendChild(el('h3',null,'Glossary'));
- gl.appendChild(el('p','lede','Terms the course actually uses, drawn from the readings.'));
  D.practice.glossary.forEach(([t,d,u])=>{const x=el('div','gl');
    x.appendChild(el('div',null,'<b>'+esc(t)+'</b> <span class="tag">Unit '+u+'</span>'));
    x.appendChild(el('p',null,esc(d)));gl.appendChild(x);});
@@ -1975,7 +1983,7 @@ var XLINK={
  30:['cas9'], 32:['cas9','plasmid'], 33:['plasmid'], 34:['cas9']
 };
 
-renderNow();renderLessons();renderLearn();renderNotebook();renderPractice();renderExplore();
+renderNow();renderLessons();renderLearn();renderGlossary();renderNotebook();renderPractice();renderExplore();
 
 /* A page left open overnight would otherwise keep yesterday's "Today". Re-render
    when the tab comes back into view, but only if the calendar day actually rolled
